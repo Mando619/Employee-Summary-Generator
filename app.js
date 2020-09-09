@@ -54,7 +54,7 @@ function generateNewRole() {
         {
             type: "list",
             name: "role",
-            message: "What employee role you like to add?",
+            message: "What employee role would you like to add?",
             choices: [
                 "Manager",
                 "Engineer",
@@ -69,7 +69,7 @@ function generateNewRole() {
         if (answers.role === "Engineer") {
             generateEngineer()
         }
-        else if (answers.role === "Inter") {
+        else if (answers.role === "Intern") {
             generateIntern()
         }
         else if (answers.role === "None") {
@@ -142,3 +142,4 @@ function generateNewRole() {
             })
         }
     
+        // create function for rendering html and writing file. use async function
