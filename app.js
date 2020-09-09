@@ -4,9 +4,9 @@ const Intern = require("./lib/intern");
 const render = require("./lib/htmlRender");
 const inquirer = require("inquirer");
 const path = require("path");
+const OUTPUT_DIR = path.resolve(__dirname, "output")
+const outputPath = path.join(OUTPUT_DIR, "team.html");
 const fs = require("fs");
-//const OUTPUT_DIR = path.resolve(__dirname, "output");
-//const outputPath = path.join(OUTPUT_DIR, "team.html");
 const util = require("util");
 
 const writeFileAsync = util.promisify(fs.writeFile);
@@ -21,7 +21,7 @@ function generateManager() {
     inquirer.prompt([
         {
             type: "input",
-            name: "manager",
+            name: "name",
             message: "What is your Managers name?"
         },
         {
@@ -73,7 +73,8 @@ function generateNewRole() {
             generateIntern()
         }
         else if (answers.role === "None") {
-            render(employeeRoster)
+            console.log("You have successfully finished creating your team!");
+            generateHtml()
         }
     })
 }
@@ -81,7 +82,7 @@ function generateNewRole() {
         inquirer.prompt([
             {
                 type: "input",
-                name: "engineer",
+                name: "name",
                 message: "What is your Engineers name?",
             },
             {
@@ -113,7 +114,7 @@ function generateNewRole() {
             inquirer.prompt([
                 {
                     type: "input",
-                    name: "intern",
+                    name: "name",
                     message: "What is your Interns name?"
                 },
                 {
@@ -143,3 +144,13 @@ function generateNewRole() {
         }
     
         // create function for rendering html and writing file. use async function
+
+            async function generateHtml() {
+                try{
+                const html = render(employeeRoster);
+                await writeFileAsync(outputPath, html)
+                   console.log ("You have successfully written your team page!")
+                } catch(err) {
+                    console.log(err)
+                }
+            }
