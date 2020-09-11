@@ -78,79 +78,78 @@ function generateNewRole() {
         }
     })
 }
-    function generateEngineer() {
-        inquirer.prompt([
-            {
-                type: "input",
-                name: "name",
-                message: "What is your Engineers name?",
-            },
-            {
-                type: "input",
-                name: "id",
-                message: "What is your Engineers id number?"
-            },
-            {
-                type: "input",
-                name: "email",
-                message: "What is your Engineers email?"
+function generateEngineer() {
+    inquirer.prompt([
+        {
+            type: "input",
+            name: "name",
+            message: "What is your Engineers name?",
+        },
+        {
+            type: "input",
+            name: "id",
+            message: "What is your Engineers id number?"
+        },
+        {
+            type: "input",
+            name: "email",
+            message: "What is your Engineers email?"
 
-            },
-            {
-                type: "input",
-                name: "github",
-                message: "What is your Engineers Github username?"
-            },
+        },
+        {
+            type: "input",
+            name: "github",
+            message: "What is your Engineers Github username?"
+        },
 
-        ]).then(function (answers) {
-            const engineer = new Engineer(answers.name, answers.id, answers.email, answers.github)
-            employeeRoster.push(engineer)
-            console.log(employeeRoster)
-            generateNewRole()
-        })
+    ]).then(function (answers) {
+        const engineer = new Engineer(answers.name, answers.id, answers.email, answers.github)
+        employeeRoster.push(engineer)
+        console.log(employeeRoster)
+        generateNewRole()
+    })
+}
+
+function generateIntern() {
+    inquirer.prompt([
+        {
+            type: "input",
+            name: "name",
+            message: "What is your Interns name?"
+        },
+        {
+            type: "input",
+            name: "id",
+            message: "What is your Interns id?",
+        },
+        {
+            type: "input",
+            name: "email",
+            message: "What is your Interns email?"
+
+        },
+        {
+            type: "message",
+            name: "school",
+            message: "What is the name of your Interns school?"
+        },
+
+    ]).then(function (answers) {
+        const intern = new Intern(answers.name, answers.id, answers.email, answers.school)
+        employeeRoster.push(intern)
+        console.log(employeeRoster)
+        generateNewRole()
+    })
+}
+
+// create function for rendering html and writing file. use async function
+
+async function generateHtml() {
+    try {
+        const html = render(employeeRoster);
+        await writeFileAsync(outputPath, html)
+        console.log("You have successfully written your team page!")
+    } catch (err) {
+        console.log(err)
     }
-
-        function generateIntern() {
-            inquirer.prompt([
-                {
-                    type: "input",
-                    name: "name",
-                    message: "What is your Interns name?"
-                },
-                {
-                    type: "input",
-                    name: "id",
-                    message: "What is your Interns id?",
-                },
-                {
-                    type: "input",
-                    name: "email",
-                    message: "What is your Interns email?"
-
-                },
-                {
-                    type: "message",
-                    name: "school",
-                    message: "What is the name of your Interns school?"
-                },
-
-            ]).then(function (answers) {
-
-                const intern = new Intern(answers.name, answers.id, answers.email, answers.school)
-                employeeRoster.push(intern)
-                console.log(employeeRoster)
-                generateNewRole()
-            })
-        }
-    
-        // create function for rendering html and writing file. use async function
-
-            async function generateHtml() {
-                try{
-                const html = render(employeeRoster);
-                await writeFileAsync(outputPath, html)
-                   console.log ("You have successfully written your team page!")
-                } catch(err) {
-                    console.log(err)
-                }
-            }
+}
